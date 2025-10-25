@@ -2137,6 +2137,103 @@ them to connect website via RSS feeds<sup><a href="#fn-vision" id="fn-vision-bod
 So, easy win there. The rest is details.</p>
 <p>Here's where my head's at:</p>
 
+<details open >
+  <summary>TL;DR</summary>
+
+<ul>
+<li>
+<p>Server files statically in order to open access
+to as many people as possilbe (e.g. folks that can't
+afford a server with dynamic processing should not be
+left out of the feature).</p>
+</li>
+<li>
+<p>Provide <code>.well-known/avatars</code> for both DOMAINS
+and ACCOUNTS. (e.g. so RSS readers can benefit
+from the feature as well)</p>
+</li>
+<li>
+<p>Default images must be square .jpg files
+and go to these locations for the DOMAIN
+and ACCOUNTS respectively.</p>
+<pre><code>  /.well-known/avatars/default.jpg
+  and
+  /.well-known/avatars/UUID/default.jpg
+</code></pre>
+</li>
+<li>
+<p><code>manifest.json</code> files list other avatars that
+are available. They reside at:</p>
+<pre><code>  /.well-known/avatars/manifest.json
+  and
+  /.well-known/avatars/UUID/manifest.json
+</code></pre>
+</li>
+<li>
+<p>MANIFEST FILES include two categories of
+avatars: <code>default</code> and <code>custom</code>.</p>
+<p>The <code>default</code> avatars are intended to be used
+generically. The <code>custom</code> avatars are to provide
+the ability for folks to maintain multiple
+avatars in their own centralized location if
+they want to use more than one (e.g. so
+folks don't have to use the same avatar
+on LinkedIn that they use on Mastodon.)</p>
+</li>
+<li>
+<p>Tags are used to communicate intent
+for which images go where beyond the
+defaults.</p>
+</li>
+<li>
+<p>Don't use image sizes, just use ratios.</p>
+</li>
+<li>
+<p>Add a field for Alt Text</p>
+</li>
+<li>
+<p>Provide for animated avatars as well</p>
+</li>
+</ul>
+
+</details>
+
+<details open ><summary>MANIFEST FILE Proposal Example</summary>
+
+<pre class="code-block"><code><span class="line-marker"></span><span class="source json"><span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
+<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>accountDomain<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>www.example.com<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>accountUUID<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>6fdc-etc...<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>customAvatars<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
+<span class="line-marker"></span>    <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>animated<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>    <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>static<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span>
+<span class="line-marker"></span>  </span><span class="punctuation section dictionary end json">}</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>defaultAvatars<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
+<span class="line-marker"></span>    <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>animated<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>    <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>static<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span>
+<span class="line-marker"></span>      <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>altText<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>a black and white portrait...<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>tags<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>url<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>/.well-known/avatars/default.jpg<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>ratio<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="constant numeric json">1</span><span class="punctuation separator array json">,</span> <span class="constant numeric json">1</span><span class="punctuation section array end json">]</span></span>
+<span class="line-marker"></span>      </span><span class="punctuation section dictionary end json">}</span></span><span class="punctuation separator array json">,</span>
+<span class="line-marker"></span>      <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>altText<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>lorem ipsum...<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>tags<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>mastodon<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>url<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>/images/16x9-example.png<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>ratio<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="constant numeric json">1.77</span><span class="punctuation separator array json">,</span> <span class="constant numeric json">1</span><span class="punctuation section array end json">]</span></span>
+<span class="line-marker"></span>      </span><span class="punctuation section dictionary end json">}</span></span><span class="punctuation separator array json">,</span>
+<span class="line-marker"></span>      <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>altText<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>lorem ipsum...<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>tags<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>url<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>https://well-known-avatars.alanwsmith.com/images/another-1x1.jpg<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>ratio<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="constant numeric json">1.77</span><span class="punctuation separator array json">,</span> <span class="constant numeric json">1</span><span class="punctuation section array end json">]</span></span>
+<span class="line-marker"></span>      </span><span class="punctuation section dictionary end json">}</span></span>
+<span class="line-marker"></span>    <span class="punctuation section array end json">]</span></span>
+<span class="line-marker"></span>  </span><span class="punctuation section dictionary end json">}</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>manifestSchemaVersion<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="constant numeric json">0</span><span class="punctuation separator array json">,</span> <span class="constant numeric json">1</span><span class="punctuation separator array json">,</span> <span class="constant numeric json">0</span><span class="punctuation section array end json">]</span></span>
+<span class="line-marker"></span></span><span class="punctuation section dictionary end json">}</span></span></span></code>
+</pre>
+</details>
 
 
 <details>
@@ -2372,20 +2469,29 @@ the MANIFEST SCHEMA.</p>
   <div class="default-flow">
 <ul>
 <li>
-<p>CLIENTS MUST accept static raster images from all standard
-encodings from <code>.jpg</code>, <code>.png</code>, <code>.webp</code>, <code>.avif</code>.</p>
+<p>CLIENTS MUST accept static raster avatars from <code>.jpg</code>, <code>.png</code>, <code>.webp</code>, <code>.avif</code>
+(TODO: determine list of all formats and the specific encoding
+that each one can represent)</p>
 </li>
 <li>
-<p>CLIENTS MAY accept static raster images from encodings
+<p>CLIENTS MAY accept static raster avatars from encodings
 for other extensions.</p>
 </li>
 <li>
-<p>CLIENTS MUST accept static vector images encoded as
+<p>CLIENTS MUST accept static vector avatars as
 <code>.svg</code>.</p>
 </li>
 <li>
-<p>CLIENTS MAY accept static vector images from encodings
-for other extensions.</p>
+<p>CLIENTS MAY accept static vector avatars from
+other encodings/extensions.</p>
+</li>
+<li>
+<p>CLIENTS MUST accept animated avatars from
+<code>.gif</code>, <code>.avif</code>, <code>.mp4</code>, <code>.webm</code></p>
+</li>
+<li>
+<p>CLIENTS MAY accept animated avatars from
+other encodings/extensions.</p>
 </li>
 </ul>
   </div>
@@ -2519,42 +2625,6 @@ be `null`, but that's maybe a touch agressive.
     </details>
 
   </div>
-</details>
-<details><summary>MANIFEST FILE Proposal Example</summary>
-
-<pre class="code-block"><code><span class="line-marker"></span><span class="source json"><span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
-<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>accountDomain<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>www.example.com<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>accountUUID<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>6fdc-etc...<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>customAvatars<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
-<span class="line-marker"></span>    <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>animated<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>    <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>static<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span>
-<span class="line-marker"></span>  </span><span class="punctuation section dictionary end json">}</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>defaultAvatars<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
-<span class="line-marker"></span>    <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>animated<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>    <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>static<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span>
-<span class="line-marker"></span>      <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
-<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>altText<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>a black and white portrait...<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>tags<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>url<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>/.well-known/avatars/default.jpg<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>ratio<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="constant numeric json">1</span><span class="punctuation separator array json">,</span> <span class="constant numeric json">1</span><span class="punctuation section array end json">]</span></span>
-<span class="line-marker"></span>      </span><span class="punctuation section dictionary end json">}</span></span><span class="punctuation separator array json">,</span>
-<span class="line-marker"></span>      <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
-<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>altText<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>lorem ipsum...<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>tags<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>mastodon<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>url<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>/images/16x9-example.png<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>ratio<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="constant numeric json">1.77</span><span class="punctuation separator array json">,</span> <span class="constant numeric json">1</span><span class="punctuation section array end json">]</span></span>
-<span class="line-marker"></span>      </span><span class="punctuation section dictionary end json">}</span></span><span class="punctuation separator array json">,</span>
-<span class="line-marker"></span>      <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
-<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>altText<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>lorem ipsum...<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>tags<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>url<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>https://well-known-avatars.alanwsmith.com/images/another-1x1.jpg<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>ratio<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="constant numeric json">1.77</span><span class="punctuation separator array json">,</span> <span class="constant numeric json">1</span><span class="punctuation section array end json">]</span></span>
-<span class="line-marker"></span>      </span><span class="punctuation section dictionary end json">}</span></span>
-<span class="line-marker"></span>    <span class="punctuation section array end json">]</span></span>
-<span class="line-marker"></span>  </span><span class="punctuation section dictionary end json">}</span></span><span class="punctuation separator dictionary pair json">,</span></span>
-<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>manifestSchemaVersion<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="constant numeric json">0</span><span class="punctuation separator array json">,</span> <span class="constant numeric json">1</span><span class="punctuation separator array json">,</span> <span class="constant numeric json">0</span><span class="punctuation section array end json">]</span></span>
-<span class="line-marker"></span></span><span class="punctuation section dictionary end json">}</span></span></span></code>
-</pre>
 </details>
 
 <details><summary>Various Rationales</summary>
