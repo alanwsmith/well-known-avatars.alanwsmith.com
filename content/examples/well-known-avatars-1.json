@@ -1,34 +1,32 @@
 {
-  "alternate": {
+  "accountDomain": "www.example.com",
+  "accountUUID": "6fdc-etc...",
+  "customAvatars": {
     "animated": [],
     "static": []
   },
-  "schemaVersion": [0, 1, 0],
-  "default": {
+  "defaultAvatars": {
     "animated": [],
     "static": [
       {
         "altText": "a black and white portrait...",
         "tags": [],
         "url": "/.well-known/avatars/default.jpg",
-        "x": 1,
-        "y": 1
+        "ratio": [1, 1]
       },
       {
         "altText": "lorem ipsum...",
         "tags": ["mastodon"],
         "url": "/images/16x9-example.png",
-        "x": 1.77,
-        "y": 1
+        "ratio": [1.77, 1]
       },
       {
         "altText": "lorem ipsum...",
         "tags": [],
         "url": "https://well-known-avatars.alanwsmith.com/images/another-1x1.jpg",
-        "x": 1,
-        "y": 1
+        "ratio": [1.77, 1]
       }
     ]
   },
-  "uuid": "6fdc-etc..."
+  "manifestSchemaVersion": [0, 1, 0]
 }

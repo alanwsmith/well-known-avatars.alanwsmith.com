@@ -1,0 +1,50 @@
+
+
+<details>
+  <summary>DOMAIN Specific AVATAR SET</summary>
+  <div class="default-flow">
+
+[! filter markdown|safe !]
+
+The purpose of this AVATAR SET is to 
+represent the DOMAIN without the need
+for an ACCOUNT. One use case is RSS readers
+who can go to the .well-known address
+for any feed if no metadata points to
+other files.  DOMAIN DEFAULT IMAGES
+
+### DOMAIN DEFAULT IMAGES 
+
+- A DOMAIN SHOULD publish a DEFAULT IMAGE.
+
+- The DOMAIN DEFAULT IMAGE MUST BE at the URL:
+
+<pre class="code-block">
+/.well-known/avatars/default.jpg
+</pre>
+
+- The DOMAIN DEFAULT IMAGE MUST BE a square image (i.e.
+a 1:1 aspect ratio).
+
+- The DOMAIN DEFAULT IMAGE MUST BE named "default.jpg".
+
+- The DOMAIN DEFAULT IMAGE MUST BE a JPEG encoded image.
+
+### DOMAIN MANIFEST FILES
+
+- A DOMAIN SHOULD publish a MANIFEST FILE.
+
+- The MANIFEST FILE MUST BE at the URL:
+
+<pre class="code-block">
+/.well-known/avatars/manifest.json
+</pre>
+
+- The MANIFEST FILE MUST BE conforming to 
+the MANIFEST SCHEMA.
+
+[! endfilter !]
+
+  </div>
+</details>
+

@@ -1,0 +1,83 @@
+
+<details>
+
+  <summary>ACCOUNT Specific AVATAR SETS</summary>
+
+  <div class="default-flow">
+
+[! filter markdown|safe !]
+
+Multiple ACCOUNT specific AVATAR SETS
+can be hosted on a single DOMAIN. These
+ACCOUNT AVATAR SETS MUST BE fully
+independent and addressed individually. 
+
+### ACCOUNT UUIDs
+
+- Each ACCOUNT MUST BE represented by
+a UUID.
+
+- The UUID MUST BE version 5. 
+
+- Version 5 UUIDs are made from a 
+"namespace identifier" and "name". The 
+"namespace identifier" MUST BE 
+the UUID ba69072a-456d-4a26-9ec3-8631f29eca3b
+
+- The "name" portion of the ACCOUNT
+UUID MAY BE an email address. 
+
+- The "name" portion of the ACCOUNT 
+UUID CAN BE an valid string that
+generates a UUID. 
+
+  (obviously, one of the key points here
+is to be able to use email addresses
+to tie things together, but explicitly
+being an email address isn't required. 
+This opens the door for other tokens
+to be used as well.)
+
+### ACCOUNT DEFAULT IMAGES
+
+- ACCOUNTS SHOULD publish a DEFAULT IMAGE.
+
+- The URL for an ACCOUNT'S DEFAULT IMAGE 
+MUST BE:
+
+<pre class="code-block">
+/.well-known/avatars/UUID/default.jpg
+</pre>
+
+
+- The ACCOUNT'S DEFAULT IMAGE MUST BE a square image (i.e.
+a 1:1 aspect ratio).
+
+- The ACCOUNT'S DEFAULT IMAGE MUST BE named "default.jpg".
+
+- The ACCOUNT'S DEFAULT IMAGE MUST BE a JPEG encoded image.
+
+
+
+
+
+
+### ACCOUNT MANIFEST FILES
+
+- A ACCOUNT SHOULD publish a MANIFEST FILE.
+
+- The ACCOUNT MANIFEST FILE MUST BE at the URL:
+
+<pre class="code-block">
+/.well-known/avatars/UUID/manifest.json
+</pre>
+
+- The ACCOUNT MANIFEST FILE MUST BE conforming to 
+the MANIFEST SCHEMA.
+
+  </div>
+
+[! endfilter !]
+
+</details>
+
