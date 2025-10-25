@@ -15,7 +15,6 @@ This page is a response to
 
 [! filter markdown|safe !]
 
-
 - My site is twenty-five years old. I approach this
   kind of exercise by thinking about the next twenty-five.
   It's a fools errand. A prime opportunity
@@ -45,6 +44,11 @@ is the same 100% of the time.
   enough experience with image formats now
   that we can safely pick a default that
   will be useful for at least a few decades. 
+
+- I'm dropping a UUID in for a namespace
+  identifier. It's as good as any, but
+  should not be considered official in 
+  any way at this point. 
 
 [! endfilter !]
 
@@ -95,26 +99,25 @@ who can go to the .well-known address
 for any feed if no metadata points to
 other files. 
 
-### DEFAULT IMAGE
+### DOMAIN DEFAULT IMAGES
 
 - A DOMAIN SHOULD publish a DEFAULT IMAGE.
 
-- The DEFAULT IMAGE MUST BE at the URL:
+- The DOMAIN DEFAULT IMAGE MUST BE at the URL:
 
 <pre class="code-block">
 /.well-known/avatars/default.jpg
 </pre>
 
-
-- The DEFAULT IMAGE MUST BE a square image (i.e.
+- The DOMAIN DEFAULT IMAGE MUST BE a square image (i.e.
 a 1:1 aspect ratio).
 
-- The DEFAULT IMAGE MUST BE named "default.jpg".
+- The DOMAIN DEFAULT IMAGE MUST BE named "default.jpg".
 
-- The DEFAULT IMAGE MUST BE a JPEG encoded image.
+- The DOMAIN DEFAULT IMAGE MUST BE a JPEG encoded image.
 
 
-### MANIFEST FILE
+### DOMAIN MANIFEST FILES
 
 - A DOMAIN SHOULD publish a MANIFEST FILE.
 
@@ -132,18 +135,72 @@ the MANIFEST SCHEMA.
 
 Multiple ACCOUNT specific AVATAR SETS
 can be hosted on a single DOMAIN. These
-are addressed individually and
-fully self-contained. 
+ACCOUNT AVATAR SETS MUST BE fully
+independent and addressed individually. 
 
-- Each ACCOUNT MUST be represented by
+### ACCOUNT UUIDs
+
+- Each ACCOUNT MUST BE represented by
 a UUID.
 
-- The UUID must be version 5. 
+- The UUID MUST BE version 5. 
 
-- Version 5 UUIDs are made from a "namespace identifier" 
-and "name" where the "namespace identifier" is
-itself a UUID. The UUID for the "namespace identifier"
-portion of the ACCOUNT UUID MUST BE
+- Version 5 UUIDs are made from a 
+"namespace identifier" and "name". The 
+"namespace identifier" MUST BE 
+the UUID ba69072a-456d-4a26-9ec3-8631f29eca3b
+
+- The "name" portion of the ACCOUNT
+UUID MAY BE an email address. 
+
+- The "name" portion of the ACCOUNT 
+UUID CAN BE an valid string that
+generates a UUID. 
+
+  (obviously, one of the key points here
+is to be able to use email addresses
+to tie things together, but explicitly
+being an email address isn't required. 
+This opens the door for other tokens
+to be used as well.)
+
+### ACCOUNT DEFAULT IMAGES
+
+- ACCOUNTS SHOULD publish a DEFAULT IMAGE.
+
+- The URL for an ACCOUNT'S DEFAULT IMAGE 
+MUST BE:
+
+<pre class="code-block">
+/.well-known/avatars/UUID/default.jpg
+</pre>
+
+
+- The ACCOUNT'S DEFAULT IMAGE MUST BE a square image (i.e.
+a 1:1 aspect ratio).
+
+- The ACCOUNT'S DEFAULT IMAGE MUST BE named "default.jpg".
+
+- The ACCOUNT'S DEFAULT IMAGE MUST BE a JPEG encoded image.
+
+
+
+
+
+### ACCOUNT MANIFEST FILES
+
+- A ACCOUNT SHOULD publish a MANIFEST FILE.
+
+- The ACCOUNT MANIFEST FILE MUST BE at the URL:
+
+<pre class="code-block">
+/.well-known/avatars/UUID/manifest.json
+</pre>
+
+- The ACCOUNT MANIFEST FILE MUST BE conforming to 
+the MANIFEST SCHEMA.
+
+
 
 
 

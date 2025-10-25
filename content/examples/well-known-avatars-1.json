@@ -1,40 +1,33 @@
 {
   "schemaVersion": [0, 0, 1],
   "uuid": "6fdc-etc...",
-  "avatars": {
-    "static": {
-      "default": [
-        {
-          "x": 1,
-          "y": 1,
-          "url": "/.well-known/avatars/default.jpg",
-          "tags": []
-        },
-        {
-          "x": 1.77,
-          "y": 1,
-          "url": "https://well-known-avatars.alanwsmith.com/images/16x9-example.png",
-          "tags": []
-        },
-        {
-          "x": 1,
-          "y": 1,
-          "url": "/images/another-1x1.jpg",
-          "tags": ["mastodon"]
-        }
-      ],
-      "alternate": [
-        {
-        }
-      ]
-    },
-    "animated": {
-      "default": []
-    }
+  "static": {
+    "default": [
+      {
+        "x": 1,
+        "y": 1,
+        "url": "/.well-known/avatars/default.jpg",
+        "tags": []
+      },
+      {
+        "x": 1.77,
+        "y": 1,
+        "url": "https://well-known-avatars.alanwsmith.com/images/16x9-example.png",
+        "tags": []
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "url": "/images/another-1x1.jpg",
+        "tags": ["mastodon"]
+      }
+    ],
+    "alternate": [
+      {
+      }
+    ]
   },
-  "banners": {
-    "static": {
-      "defaults": []
-    }
+  "animated": {
+    "default": []
   }
 }
