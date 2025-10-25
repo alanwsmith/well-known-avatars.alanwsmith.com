@@ -12,3 +12,7 @@
   padding: var(--default-padding);
 }
 
+.left-pad {
+  padding-left: 2rem;
+  border-left: var(--accent-border);
+}

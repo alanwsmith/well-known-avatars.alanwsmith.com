@@ -10,7 +10,7 @@ This page is a response to
 
 [! endfilter !]
 
-<details open>
+<details>
   <summary>Preface/Assumptions</summary>
 
 [! filter markdown|safe !]
@@ -55,7 +55,7 @@ is the same 100% of the time.
 </details>
 
 
-<details open><summary>Terminology</summary>
+<details><summary>Terminology</summary>
 
 [! filter markdown|safe !]
 - "ACCOUNT" - what/whoever's avatars are being served. 
@@ -87,10 +87,11 @@ is the same 100% of the time.
 </details>
 
 
+<details>
+  <summary>DOMAIN Specific AVATAR SET</summary>
 
 [! filter markdown|safe !]
 
-## DOMAIN Specific AVATAR SET 
 
 The purpose of this AVATAR SET is to 
 represent the DOMAIN without the need
@@ -130,8 +131,11 @@ a 1:1 aspect ratio).
 - The MANIFEST FILE MUST BE conforming to 
 the MANIFEST SCHEMA.
 
+</details>
 
-## ACCOUNT Specific AVATAR SETS
+<details>
+
+  <summary>ACCOUNT Specific AVATAR SETS</summary>
 
 Multiple ACCOUNT specific AVATAR SETS
 can be hosted on a single DOMAIN. These
@@ -187,6 +191,7 @@ a 1:1 aspect ratio).
 
 
 
+
 ### ACCOUNT MANIFEST FILES
 
 - A ACCOUNT SHOULD publish a MANIFEST FILE.
@@ -201,65 +206,30 @@ a 1:1 aspect ratio).
 the MANIFEST SCHEMA.
 
 
-
-
-
-
-
-
-
-
-## The Default Avatars URLs
-
-There are two 
-
-
-
-
-
-
-
 [! endfilter !]
 
+</details>
 
 
+<details open >
 
+<summary>MANIFEST FILE Proposal</summary>
 
-<pre class="code-block"><code>
-  [!- filter highlight_json|safe !]
-  [!- include "examples/well-known-avatars-1.json" !]
-  [!- endfilter !]
-</code>
-</pre>
-
-
+  <div class="default-flow left-pad">
 
 [! filter markdown|safe !]
 
-## Notes
-
-
-Here's the breakdown of ideas:
-
-- The primary requirement is publishing a
-square image in JPG format at:
-
-
-
-
-
-
-
-- Don't use multiple image sizes. 
+  <details><summary>Don't use multiple image sizes. </summary>
 Make one big one. Leave it to the 
 clients to convert images to sizes that 
 suite their needs.
+
+  </details>
 
 - Don't publish MIME types. 
 Make the requirement that the image's
 "url" key end with a `.EXTENSION`
 that must match the encoding of the image. 
-
 
 
   If someone publishes an avatar and it's
@@ -282,8 +252,19 @@ another without having to update the UUID.
 - There can be more than on image per
 category with the same x/y aspect ratio.
 
-
 [! endfilter !]
+
+  </div>
+
+</details>
+
+
+<pre class="code-block"><code>
+  [!- filter highlight_json|safe !]
+  [!- include "examples/well-known-avatars-1.json" !]
+  [!- endfilter !]
+</code>
+</pre>
 
 [!- endblock -!]
 
