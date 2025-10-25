@@ -4,8 +4,17 @@
 
 [! filter markdown|safe !]
 
-This page is a response to 
-[this post](https://hachyderm.io/deck/@Edent@mastodon.social/115424027979178982).
+
+Terence Eden^^te^^ wrote a
+post about using ``.well-known`` addresses^^wka^^ for avatars^^post^^ and
+asked for thoughts. 
+I'm in as soon as ``.well-known`` addresses are
+mentioned. I love them. I think we should
+build a new social network that uses
+them to connect website via RSS feeds^^neb^^.
+So, easy win there. The rest is details.
+
+Here's where my head's at:
 
 
 [! endfilter !]
@@ -89,18 +98,19 @@ is the same 100% of the time.
 
 <details>
   <summary>DOMAIN Specific AVATAR SET</summary>
+  <div class="default-flow">
 
 [! filter markdown|safe !]
-
 
 The purpose of this AVATAR SET is to 
 represent the DOMAIN without the need
 for an ACCOUNT. One use case is RSS readers
 who can go to the .well-known address
 for any feed if no metadata points to
-other files. 
+other files.  DOMAIN DEFAULT IMAGES
 
-### DOMAIN DEFAULT IMAGES
+### DOMAIN DEFAULT IMAGES 
+
 
 - A DOMAIN SHOULD publish a DEFAULT IMAGE.
 
@@ -131,11 +141,15 @@ a 1:1 aspect ratio).
 - The MANIFEST FILE MUST BE conforming to 
 the MANIFEST SCHEMA.
 
+  </div>
 </details>
 
 <details>
 
   <summary>ACCOUNT Specific AVATAR SETS</summary>
+
+  <div class="default-flow">
+
 
 Multiple ACCOUNT specific AVATAR SETS
 can be hosted on a single DOMAIN. These
@@ -205,59 +219,19 @@ a 1:1 aspect ratio).
 - The ACCOUNT MANIFEST FILE MUST BE conforming to 
 the MANIFEST SCHEMA.
 
-
-[! endfilter !]
-
-</details>
-
-
-<details open >
-
-<summary>MANIFEST FILE Proposal</summary>
-
-  <div class="default-flow left-pad">
-
-[! filter markdown|safe !]
-
-  <details><summary>Don't use multiple image sizes. </summary>
-Make one big one. Leave it to the 
-clients to convert images to sizes that 
-suite their needs.
-
-  </details>
-
-- Don't publish MIME types. 
-Make the requirement that the image's
-"url" key end with a `.EXTENSION`
-that must match the encoding of the image. 
-
-
-  If someone publishes an avatar and it's
-all pixelated because it's too small they
-can make it bigger. 
-
-- Instead of width and height sizes, 
-go with aspect ratio
-dimensions (x and y) for each image. 
-Downstream services/apps can scan the 
-sizes and pick the one that closest 
-matches what they use.
-
-
-- UUIDs should not include the domain. only
-the email address. That way folks
-can move redirect from one domain to
-another without having to update the UUID.
-
-- There can be more than on image per
-category with the same x/y aspect ratio.
-
-[! endfilter !]
-
   </div>
 
+[! endfilter !]
+
 </details>
 
+
+
+[! include "_includes/manifest-file-proposal.html" !]
+
+
+
+<details><summary>MANIFEST FILE Proposal Example</summary>
 
 <pre class="code-block"><code>
   [!- filter highlight_json|safe !]
@@ -265,6 +239,87 @@ category with the same x/y aspect ratio.
   [!- endfilter !]
 </code>
 </pre>
+</details>
+
+
+<details open><summary>Various Rationales</summary>
+
+[! filter markdown|safe !]
+
+- Using `/.well-known/avatars` instead of `/.well-known/avatar` 
+makes it clear that multiple accounts may be available (and
+possibly the DOMAIN) are potentially included. 
+
+- Using a directory based appraoch like:
+
+        /.well-known/avatars/UUID/default.jpg
+        and
+        /.well-known/avatars/UUID/manifest.json
+
+  instead of a query string appraoch like:
+
+        /.well-known/avatar?resource=acct:username@example.com
+
+  allow for the entire feature to be served statically. 
+  My position is that this lowers the barrier of entry
+  to gaining access to the avatars significantly. If
+  server side processing is required an entire
+  category of free services is taken off the board. 
+
+- Email address should never be sent in cleartext. 
+Even if the requests themselves go over an encrypted 
+channel, it's entirely to easy for a service leak URLs
+(e.g. a naive developer might call the URL with email 
+address directly from public pages). The system should
+be set up so that leaking either through intention
+or mistake is eliminated wherever possible.
+
+  I'm pitching UUID v5 here, but that's very much open
+  for discussion. Those decisions are securty based
+  and I'd look for help from experts in the field
+  on that front. 
+
+- I like having the DOMAIN version included for two reasons. 
+First, it would let folks who have domains use
+them without having to submit any other token or PII. 
+Second, it feels like a nice way to expand the tools
+that RSS readers have available as well. 
+
+- The idea of using an `Accept` header to determine
+which content to reply with is very cool. My push
+back against it is that it requires server side
+processing. That introduces the same issue
+of limiting the availabity to folks who
+have accesss to server site processing. 
+
+  That's what leads me to the independent, explict 
+  paths for the `.json` and `.jpg` files. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  [!- endfilter !]
+
+
+
+</details>
+
 
 [!- endblock -!]
 

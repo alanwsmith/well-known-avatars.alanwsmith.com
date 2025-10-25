@@ -1,0 +1,114 @@
+<details>
+  <summary>MANIFEST FILE Proposal</summary>
+
+  <div class="default-flow">
+    <details>
+      <summary>Don't use multiple image sizes</summary>
+      <div class="default-flow">
+        <p>
+          Make one big copy of each avatar image. Leave it to the CLIENTS to
+          convert images to sizes that suite their needs.
+        </p>
+        <p>
+          If an ACCOUNT or DOMAIN publishes an avatar that's all pixelated
+          because it's too small they can make it bigger (something they'd have
+          to do anyway if the largest image they provided wasn't big enough).
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Use aspect ratios instead of explicit dimensions</summary>
+      <div class="default-flow">
+        <p>
+          Provide <code>x</code> and <code>y</code>
+          values for images that represent its ratio instead of explicit
+          <code>width</code>
+          and <code>height</code> dimensions
+        </p>
+
+        <p>
+          CLIENTS can scan the MANIFEST FILE and pick whichever radio is closest
+          to the one they need.
+        </p>
+        <p>
+          CLIENTS can also publish lists of aspect ratios they'd prefer allowing
+          ACCOUNTS and DOMAINS to create matching images if they wish
+        </p>
+      </div>
+    </details>
+
+
+    <details>
+      <summary>Include Alt-Text with each image</summary>
+      <div class="default-flow">
+        <p>Add a key for each image that hold alt text. 
+There's an argument to be made for not letting the field
+be `null`, but that's maybe a touch agressive. 
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Don't publish MIME types</summary>
+      <p>
+        Make the requirement that the image's "url" key end with a `.EXTENSION`
+        that must match the encoding of the image.
+      </p>
+    </details>
+
+    <details>
+      <summary>Provide containers for both static and animated avatars</summary>
+      <p>
+        Discords (and probably other CLIENTS) are already using animated
+        avatars. It feels like it make the most sense to include them, but keep
+        them under their own category so its easy for clients to determine which
+        are which. (e.g. animated image formats often come with non-animated
+        capabilities. So, CLIENTS can't rely solely on image extensions to make
+        the determination)
+      </p>
+    </details>
+
+    <details>
+      <summary>Provide both default and alternate image sets</summary>
+      <p>
+        The alternate images take priority if a matching criteria is found. If
+        not, the default images are used
+      </p>
+    </details>
+
+    <details>
+      <summary>Use tags for selection criteria</summary>
+      <div></div>
+    </details>
+
+    <details>
+      <summary>Expect multiples of the same ratio to exist</summary>
+      <p>
+        There can be more than on image per category with the same x/y aspect
+        ratio. Trying to mandate they be unique would only cause overhead for
+        everyone trying to come up with different ways to deal with it when it
+        inevitably happens. Instead, leave it as an option so CLIENTS make
+        decisions about how to handle it explicitly (e.g. just pick the first
+        one).
+      </p>
+    </details>
+    <details>
+      <summary>Allow relative URLs</summary>
+      <p>
+        Having to use full URL that include the domain with OG images is a pain
+        for dev and testing. Make it explicit that URLs that are relative from
+        the docroot are allowed.
+      </p>
+    </details>
+
+    <details>
+      <summary>Allow alternate domain URLs</summary>
+      <p>
+        Any valid URL should be accepted, regardless of 
+        the domain. 
+      </p>
+    </details>
+
+  </div>
+</details>
