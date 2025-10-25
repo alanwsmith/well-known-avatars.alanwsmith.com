@@ -2,32 +2,26 @@
 
 [!- block main -!]
 
-[# TKTKTKKT put in all the parts and #]
-
 [! include "_includes/0010-intro.html" !]
 
-[! include "_includes/0015-tldr.html" !]
 
-[! include "_includes/0120-manifest-file-proposal-example.html" !]
+<h2>Current Draft</h2>
 
-[! include "_includes/0020-preface.html" !]
+[! for folder in folders !]
+  [! if folder.parent == "_current-draft" !]
+    [! set current_folder = folder.parent + "/" + folder.name !]
+[! include current_folder + "/overview.html" !]
+  [! endif !]
+[! endfor !]
 
-[! include "_includes/0030-terminology.html" !]
 
-[! include "_includes/0040-domain-avatar-set.html" !]
-
-[! include "_includes/0050-account-avatar-set.html" !]
-
-[! include "_includes/0060-image-formats.html" !]
-
-[! include "_includes/0070-image-cropping.html" !]
-
-[! include "_includes/0100-manifest-file-proposal.html" !]
-
-[! include "_includes/0200-various-rationales.html" !]
-
-[! include "_includes/0300-conclusion.html" !]
 
 [! include "_includes/0400-footnotes.html" !]
 
+<h2>Previous Drafts</h2>
+
+[! include "_prior-drafts/draft-0001/overview.html" !]
+
+
 [!- endblock -!]
+
