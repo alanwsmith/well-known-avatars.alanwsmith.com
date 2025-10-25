@@ -2,18 +2,24 @@
   <summary>Image Formats</summary>
   <div class="default-flow">
 [! filter markdown|safe !]
--  CLIENTS MUST accept static raster images from all standard
-encodings from `.jpg`, `.png`, `.webp`, `.avif`.
+-  CLIENTS MUST accept static raster avatars from `.jpg`, `.png`, `.webp`, `.avif`
+(TODO: determine list of all formats and the specific encoding
+that each one can represent)
 
--  CLIENTS MAY accept static raster images from encodings
+-  CLIENTS MAY accept static raster avatars from encodings
 for other extensions. 
 
-- CLIENTS MUST accept static vector images encoded as
+- CLIENTS MUST accept static vector avatars as
 `.svg`.
 
--  CLIENTS MAY accept static vector images from encodings
-for other extensions. 
+-  CLIENTS MAY accept static vector avatars from 
+other encodings/extensions. 
 
+- CLIENTS MUST accept animated avatars from 
+`.gif`, `.avif`, `.mp4`, `.webm`
+
+- CLIENTS MAY accept animated avatars from 
+other encodings/extensions. 
 
 [! endfilter !]
   </div>

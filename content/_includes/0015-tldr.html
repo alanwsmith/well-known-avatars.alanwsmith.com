@@ -1,0 +1,54 @@
+<details open >
+  <summary>TL;DR</summary>
+
+[! filter markdown|safe !]
+
+- Server files statically in order to open access
+to as many people as possilbe (e.g. folks that can't 
+afford a server with dynamic processing should not be
+left out of the feature).
+
+- Provide `.well-known/avatars` for both DOMAINS
+and ACCOUNTS. (e.g. so RSS readers can benefit
+from the feature as well)
+
+- Default images must be square .jpg files
+and go to these locations for the DOMAIN
+and ACCOUNTS respectively.
+
+        /.well-known/avatars/default.jpg
+        and
+        /.well-known/avatars/UUID/default.jpg
+
+- `manifest.json` files list other avatars that
+are available. They reside at:
+
+        /.well-known/avatars/manifest.json
+        and
+        /.well-known/avatars/UUID/manifest.json
+
+- MANIFEST FILES include two categories of 
+avatars: `default` and `custom`. 
+
+  The `default` avatars are intended to be used
+generically. The `custom` avatars are to provide
+the ability for folks to maintain multiple 
+avatars in their own centralized location if
+they want to use more than one (e.g. so
+folks don't have to use the same avatar
+on LinkedIn that they use on Mastodon.)
+
+- Tags are used to communicate intent
+for which images go where beyond the 
+defaults.
+
+- Don't use image sizes, just use ratios.
+ 
+- Add a field for Alt Text
+
+- Provide for animated avatars as well
+
+[! endfilter !]
+
+</details>
+
