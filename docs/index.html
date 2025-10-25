@@ -2164,11 +2164,11 @@ Notably, this DOES NOT include other image assets
 as those may be hosted in entirely different locations.</p>
 </li>
 <li>
-<p>&quot;DEFAULT IMAGE&quot; - a JPEG encoded file that MUST be named
+<p>&quot;DEFAULT IMAGE&quot; - a JPEG encoded file that MUST BE named
 <code>default.jpg</code></p>
 </li>
 <li>
-<p>&quot;MANIFEST FILE&quot; - a JSON file that MUST be named
+<p>&quot;MANIFEST FILE&quot; - a JSON file that MUST BE named
 <code>manifest.json</code> and MUST comply with the SCHEMA.</p>
 </li>
 <li>
@@ -2196,7 +2196,7 @@ other files.</p>
 <p>A DOMAIN SHOULD publish a DEFAULT IMAGE.</p>
 </li>
 <li>
-<p>The DEFAULT IMAGE MUST be at the URL:</p>
+<p>The DEFAULT IMAGE MUST BE at the URL:</p>
 </li>
 </ul>
 <pre class="code-block">
@@ -2204,14 +2204,14 @@ other files.</p>
 </pre>
 <ul>
 <li>
-<p>The DEFAULT IMAGE MUST have a 1:1 aspect
-ratio.</p>
+<p>The DEFAULT IMAGE MUST BE a square image (i.e.
+a 1:1 aspect ratio).</p>
 </li>
 <li>
-<p>The DEFAULT IMAGE MUST be named &quot;default.jpg&quot;.</p>
+<p>The DEFAULT IMAGE MUST BE named &quot;default.jpg&quot;.</p>
 </li>
 <li>
-<p>The DEFAULT IMAGE MUST be a JPEG encoded image.</p>
+<p>The DEFAULT IMAGE MUST BE a JPEG encoded image.</p>
 </li>
 </ul>
 <h3>MANIFEST FILE</h3>
@@ -2220,7 +2220,7 @@ ratio.</p>
 <p>A DOMAIN SHOULD publish a MANIFEST FILE.</p>
 </li>
 <li>
-<p>The MANIFEST FILE MUST be at the URL:</p>
+<p>The MANIFEST FILE MUST BE at the URL:</p>
 </li>
 </ul>
 <pre class="code-block">
@@ -2228,8 +2228,28 @@ ratio.</p>
 </pre>
 <ul>
 <li>
-<p>The MANIFEST FILE MUST conform to the
-the</p>
+<p>The MANIFEST FILE MUST BE conforming to
+the MANIFEST SCHEMA.</p>
+</li>
+</ul>
+<h2>ACCOUNT Specific AVATAR SETS</h2>
+<p>Multiple ACCOUNT specific AVATAR SETS
+can be hosted on a single DOMAIN. These
+are addressed individually and
+fully self-contained.</p>
+<ul>
+<li>
+<p>Each ACCOUNT MUST be represented by
+a UUID.</p>
+</li>
+<li>
+<p>The UUID must be version 5.</p>
+</li>
+<li>
+<p>Version 5 UUIDs are made from a &quot;namespace identifier&quot;
+and &quot;name&quot; where the &quot;namespace identifier&quot; is
+itself a UUID. The UUID for the &quot;namespace identifier&quot;
+portion of the ACCOUNT UUID MUST BE</p>
 </li>
 </ul>
 <h2>The Default Avatars URLs</h2>

@@ -66,11 +66,10 @@ is the same 100% of the time.
   Notably, this DOES NOT include other image assets
   as those may be hosted in entirely different locations. 
 
-- "DEFAULT IMAGE" - a JPEG encoded file that MUST be named 
+- "DEFAULT IMAGE" - a JPEG encoded file that MUST BE named 
   `default.jpg`
 
-
-- "MANIFEST FILE" - a JSON file that MUST be named 
+- "MANIFEST FILE" - a JSON file that MUST BE named 
   `manifest.json` and MUST comply with the SCHEMA.
 
 - "MANIFEST SCHEMA" - The JSON Schema for the MANIFEST FILE. 
@@ -100,33 +99,56 @@ other files.
 
 - A DOMAIN SHOULD publish a DEFAULT IMAGE.
 
-- The DEFAULT IMAGE MUST be at the URL:
+- The DEFAULT IMAGE MUST BE at the URL:
 
 <pre class="code-block">
 /.well-known/avatars/default.jpg
 </pre>
 
 
-- The DEFAULT IMAGE MUST have a 1:1 aspect
-ratio. 
+- The DEFAULT IMAGE MUST BE a square image (i.e.
+a 1:1 aspect ratio).
 
-- The DEFAULT IMAGE MUST be named "default.jpg".
+- The DEFAULT IMAGE MUST BE named "default.jpg".
 
-- The DEFAULT IMAGE MUST be a JPEG encoded image.
+- The DEFAULT IMAGE MUST BE a JPEG encoded image.
 
 
 ### MANIFEST FILE
 
 - A DOMAIN SHOULD publish a MANIFEST FILE.
 
-- The MANIFEST FILE MUST be at the URL:
+- The MANIFEST FILE MUST BE at the URL:
 
 <pre class="code-block">
 /.well-known/avatars/manifest.json
 </pre>
 
-- The MANIFEST FILE MUST conform to the
-the 
+- The MANIFEST FILE MUST BE conforming to 
+the MANIFEST SCHEMA.
+
+
+## ACCOUNT Specific AVATAR SETS
+
+Multiple ACCOUNT specific AVATAR SETS
+can be hosted on a single DOMAIN. These
+are addressed individually and
+fully self-contained. 
+
+- Each ACCOUNT MUST be represented by
+a UUID.
+
+- The UUID must be version 5. 
+
+- Version 5 UUIDs are made from a "namespace identifier" 
+and "name" where the "namespace identifier" is
+itself a UUID. The UUID for the "namespace identifier"
+portion of the ACCOUNT UUID MUST BE
+
+
+
+
+
 
 
 
