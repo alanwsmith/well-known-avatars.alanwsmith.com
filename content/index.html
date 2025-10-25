@@ -2,7 +2,209 @@
 
 [!- block main -!]
 
-<p>Hello, world</p>
+[! filter markdown|safe !]
+
+This page is a response to 
+[this post](https://hachyderm.io/deck/@Edent@mastodon.social/115424027979178982).
+
+
+[! endfilter !]
+
+<details open>
+  <summary>Preface/Assumptions</summary>
+
+[! filter markdown|safe !]
+
+
+- My site is twenty-five years old. I approach this
+  kind of exercise by thinking about the next twenty-five.
+  It's a fools errand. A prime opportunity
+  for premature optimization. It's also
+  an important part of my process. 
+  It boils down to the idea that 
+  "Temporary ain't^^tmp^^". The more folks
+  involved in a thing, the more likely it is
+  we'll only get one shot at it. 
+
+- I'm using SHOULD/MUST/MAY style, but only
+loosely as a framework to help writing
+and to have something to react to. 
+Coming up with a conforming spec/RFC
+is an exercise for a later time. 
+
+- I'm specifying the default images should be ".jpg" 
+files. The format is a placeholder to
+make the doc easier to read. I'm not
+concern with the actual format that's used, 
+just that there's only one so the URL
+is the same 100% of the time. 
+
+  I realize that points to a potential 
+  situation like `/favicon.ico` still hanging
+  around. My position is that we've had
+  enough experience with image formats now
+  that we can safely pick a default that
+  will be useful for at least a few decades. 
+
+[! endfilter !]
+
+</details>
+
+
+<details open><summary>Terminology</summary>
+
+[! filter markdown|safe !]
+- "ACCOUNT" - what/whoever's avatars are being served. 
+
+- "CLIENT" - sites/networks/apps/RSS readers, 
+  etc... that display the avatars.
+
+- "DOMAIN" - the domain/subdomain hosting the
+  AVATAR SET assets.
+
+- "AVATAR SET" - A DEFAULT IMAGE and a MANIFEST FILE. 
+  Notably, this DOES NOT include other image assets
+  as those may be hosted in entirely different locations. 
+
+- "DEFAULT IMAGE" - a JPEG encoded file that MUST be named 
+  `default.jpg`
+
+
+- "MANIFEST FILE" - a JSON file that MUST be named 
+  `manifest.json` and MUST comply with the SCHEMA.
+
+- "MANIFEST SCHEMA" - The JSON Schema for the MANIFEST FILE. 
+  (This will be versioned, but details on that
+  are for a future iteration). 
+
+  (I'm not sure where the schema would be 
+  hosted, but there will be an explicit URL for it)
+
+[! endfilter !]
+</details>
+
+
+
+[! filter markdown|safe !]
+
+## DOMAIN Specific AVATAR SET 
+
+The purpose of this AVATAR SET is to 
+represent the DOMAIN without the need
+for an ACCOUNT. One use case is RSS readers
+who can go to the .well-known address
+for any feed if no metadata points to
+other files. 
+
+### DEFAULT IMAGE
+
+- A DOMAIN SHOULD publish a DEFAULT IMAGE.
+
+- The DEFAULT IMAGE MUST be at the URL:
+
+<pre class="code-block">
+/.well-known/avatars/default.jpg
+</pre>
+
+
+- The DEFAULT IMAGE MUST have a 1:1 aspect
+ratio. 
+
+- The DEFAULT IMAGE MUST be named "default.jpg".
+
+- The DEFAULT IMAGE MUST be a JPEG encoded image.
+
+
+### MANIFEST FILE
+
+- A DOMAIN SHOULD publish a MANIFEST FILE.
+
+- The MANIFEST FILE MUST be at the URL:
+
+<pre class="code-block">
+/.well-known/avatars/manifest.json
+</pre>
+
+- The MANIFEST FILE MUST conform to the
+the 
+
+
+
+## The Default Avatars URLs
+
+There are two 
+
+
+
+
+
+
+
+[! endfilter !]
+
+
+
+
+
+<pre class="code-block"><code>
+  [!- filter highlight_json|safe !]
+  [!- include "examples/well-known-avatars-1.json" !]
+  [!- endfilter !]
+</code>
+</pre>
+
+
+
+[! filter markdown|safe !]
+
+## Notes
+
+
+Here's the breakdown of ideas:
+
+- The primary requirement is publishing a
+square image in JPG format at:
+
+
+
+
+
+
+
+- Don't use multiple image sizes. 
+Make one big one. Leave it to the 
+clients to convert images to sizes that 
+suite their needs.
+
+- Don't publish MIME types. 
+Make the requirement that the image's
+"url" key end with a `.EXTENSION`
+that must match the encoding of the image. 
+
+
+
+  If someone publishes an avatar and it's
+all pixelated because it's too small they
+can make it bigger. 
+
+- Instead of width and height sizes, 
+go with aspect ratio
+dimensions (x and y) for each image. 
+Downstream services/apps can scan the 
+sizes and pick the one that closest 
+matches what they use.
+
+
+- UUIDs should not include the domain. only
+the email address. That way folks
+can move redirect from one domain to
+another without having to update the UUID.
+
+- There can be more than on image per
+category with the same x/y aspect ratio.
+
+
+[! endfilter !]
 
 [!- endblock -!]
 
