@@ -1732,9 +1732,6 @@ del {
   text-decoration: line-through;
 }
 details {
-  border: var(--accent-border-faded);
-  border-radius: var(--default-radius);
-  padding: var(--default-padding);
 }
 dfn {
   font-style: italic;
@@ -1962,6 +1959,7 @@ sup {
 }
 svg {
   max-width: 100%;
+  height: auto;
 }
 table {
   margin: var(--default-margin);
@@ -2001,7 +1999,28 @@ var {
 }
 video {
   max-width: 100%;
-}.content-wrapper {
+}
+
+
+:root {
+  --svg-note-default-stroke-color: var(--primary-color);
+  --svg-note-default-fill-color: var(--primary-color);
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --svg-note-default-stroke-color: var(--primary-color);
+    --svg-note-default-fill-color: var(--primary-color);
+  }
+}
+
+
+details > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+}
+
+.content-wrapper {
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
@@ -2014,7 +2033,17 @@ video {
   margin: var(--default-margin);
   padding: var(--default-padding);
 }
-    </style>
+
+.left-pad {
+  padding-left: 2rem;
+  border-left: var(--accent-border);
+}
+
+details > *:not(summary){
+  margin-left: 0.4rem;
+  border-left: var(--accent-border);
+  padding-left: 2rem;
+}    </style>
 
     <script>
       setTimeout(() => { 
@@ -2075,15 +2104,463 @@ window.bittyFunctions = {
           <a href="https://www.alanwsmith.com/feeds/posts.xml">rss</a>
         </div>
         <hgroup class="large-top-margin">
-          <h1>A New Site</h1>
+          <h1>.well-known/avatars</h1>
           <div class="small-font accent-bottom-border">
-            With a subtitle
+            a response/scratch proposal
           </div>
         </hgroup>
       </header>
 
       <main class="default-wrapper default-flow">
-<p>Hello, world</p>      </main>
+<p>Terence Eden^^te^^ wrote a
+post about using <code>.well-known</code> addresses^^wka^^ for avatars^^post^^ and
+asked for thoughts.
+I'm in as soon as <code>.well-known</code> addresses are
+mentioned. I love them. I think we should
+build a new social network that uses
+them to connect website via RSS feeds^^neb^^.
+So, easy win there. The rest is details.</p>
+<p>Here's where my head's at:</p>
+
+<details>
+  <summary>Preface/Assumptions</summary>
+
+<ul>
+<li>
+<p>My site is twenty-five years old. I approach this
+kind of exercise by thinking about the next twenty-five.
+It's a fools errand. A prime opportunity
+for premature optimization. It's also
+an important part of my process.
+It boils down to the idea that
+&quot;Temporary ain't^^tmp^^&quot;. The more folks
+involved in a thing, the more likely it is
+we'll only get one shot at it.</p>
+</li>
+<li>
+<p>I'm using SHOULD/MUST/MAY style, but only
+loosely as a framework to help writing
+and to have something to react to.
+Coming up with a conforming spec/RFC
+is an exercise for a later time.</p>
+</li>
+<li>
+<p>I'm specifying the default images should be &quot;.jpg&quot;
+files. The format is a placeholder to
+make the doc easier to read. I'm not
+concern with the actual format that's used,
+just that there's only one so the URL
+is the same 100% of the time.</p>
+<p>I realize that points to a potential
+situation like <code>/favicon.ico</code> still hanging
+around. My position is that we've had
+enough experience with image formats now
+that we can safely pick a default that
+will be useful for at least a few decades.</p>
+</li>
+<li>
+<p>I'm dropping a UUID in for a namespace
+identifier. It's as good as any, but
+should not be considered official in
+any way at this point.</p>
+</li>
+</ul>
+
+</details>
+
+
+<details><summary>Terminology</summary>
+
+<ul>
+<li>
+<p>&quot;ACCOUNT&quot; - what/whoever's avatars are being served.</p>
+</li>
+<li>
+<p>&quot;CLIENT&quot; - sites/networks/apps/RSS readers,
+etc... that display the avatars.</p>
+</li>
+<li>
+<p>&quot;DOMAIN&quot; - the domain/subdomain hosting the
+AVATAR SET assets.</p>
+</li>
+<li>
+<p>&quot;AVATAR SET&quot; - A DEFAULT IMAGE and a MANIFEST FILE.
+Notably, this DOES NOT include other image assets
+as those may be hosted in entirely different locations.</p>
+</li>
+<li>
+<p>&quot;DEFAULT IMAGE&quot; - a JPEG encoded file that MUST BE named
+<code>default.jpg</code></p>
+</li>
+<li>
+<p>&quot;MANIFEST FILE&quot; - a JSON file that MUST BE named
+<code>manifest.json</code> and MUST comply with the SCHEMA.</p>
+</li>
+<li>
+<p>&quot;MANIFEST SCHEMA&quot; - The JSON Schema for the MANIFEST FILE.
+(This will be versioned, but details on that
+are for a future iteration).</p>
+<p>(I'm not sure where the schema would be
+hosted, but there will be an explicit URL for it)</p>
+</li>
+</ul>
+</details>
+
+
+<details>
+  <summary>DOMAIN Specific AVATAR SET</summary>
+  <div class="default-flow">
+
+<p>The purpose of this AVATAR SET is to
+represent the DOMAIN without the need
+for an ACCOUNT. One use case is RSS readers
+who can go to the .well-known address
+for any feed if no metadata points to
+other files.  DOMAIN DEFAULT IMAGES</p>
+<h3>DOMAIN DEFAULT IMAGES</h3>
+<ul>
+<li>
+<p>A DOMAIN SHOULD publish a DEFAULT IMAGE.</p>
+</li>
+<li>
+<p>The DOMAIN DEFAULT IMAGE MUST BE at the URL:</p>
+</li>
+</ul>
+<pre class="code-block">
+/.well-known/avatars/default.jpg
+</pre>
+<ul>
+<li>
+<p>The DOMAIN DEFAULT IMAGE MUST BE a square image (i.e.
+a 1:1 aspect ratio).</p>
+</li>
+<li>
+<p>The DOMAIN DEFAULT IMAGE MUST BE named &quot;default.jpg&quot;.</p>
+</li>
+<li>
+<p>The DOMAIN DEFAULT IMAGE MUST BE a JPEG encoded image.</p>
+</li>
+</ul>
+<h3>DOMAIN MANIFEST FILES</h3>
+<ul>
+<li>
+<p>A DOMAIN SHOULD publish a MANIFEST FILE.</p>
+</li>
+<li>
+<p>The MANIFEST FILE MUST BE at the URL:</p>
+</li>
+</ul>
+<pre class="code-block">
+/.well-known/avatars/manifest.json
+</pre>
+<ul>
+<li>
+<p>The MANIFEST FILE MUST BE conforming to
+the MANIFEST SCHEMA.</p>
+</div>
+</li>
+</ul>
+</details>
+<details>
+  <summary>ACCOUNT Specific AVATAR SETS</summary>
+  <div class="default-flow">
+<p>Multiple ACCOUNT specific AVATAR SETS
+can be hosted on a single DOMAIN. These
+ACCOUNT AVATAR SETS MUST BE fully
+independent and addressed individually.</p>
+<h3>ACCOUNT UUIDs</h3>
+<ul>
+<li>
+<p>Each ACCOUNT MUST BE represented by
+a UUID.</p>
+</li>
+<li>
+<p>The UUID MUST BE version 5.</p>
+</li>
+<li>
+<p>Version 5 UUIDs are made from a
+&quot;namespace identifier&quot; and &quot;name&quot;. The
+&quot;namespace identifier&quot; MUST BE
+the UUID ba69072a-456d-4a26-9ec3-8631f29eca3b</p>
+</li>
+<li>
+<p>The &quot;name&quot; portion of the ACCOUNT
+UUID MAY BE an email address.</p>
+</li>
+<li>
+<p>The &quot;name&quot; portion of the ACCOUNT
+UUID CAN BE an valid string that
+generates a UUID.</p>
+<p>(obviously, one of the key points here
+is to be able to use email addresses
+to tie things together, but explicitly
+being an email address isn't required.
+This opens the door for other tokens
+to be used as well.)</p>
+</li>
+</ul>
+<h3>ACCOUNT DEFAULT IMAGES</h3>
+<ul>
+<li>
+<p>ACCOUNTS SHOULD publish a DEFAULT IMAGE.</p>
+</li>
+<li>
+<p>The URL for an ACCOUNT'S DEFAULT IMAGE
+MUST BE:</p>
+</li>
+</ul>
+<pre class="code-block">
+/.well-known/avatars/UUID/default.jpg
+</pre>
+<ul>
+<li>
+<p>The ACCOUNT'S DEFAULT IMAGE MUST BE a square image (i.e.
+a 1:1 aspect ratio).</p>
+</li>
+<li>
+<p>The ACCOUNT'S DEFAULT IMAGE MUST BE named &quot;default.jpg&quot;.</p>
+</li>
+<li>
+<p>The ACCOUNT'S DEFAULT IMAGE MUST BE a JPEG encoded image.</p>
+</li>
+</ul>
+<h3>ACCOUNT MANIFEST FILES</h3>
+<ul>
+<li>
+<p>A ACCOUNT SHOULD publish a MANIFEST FILE.</p>
+</li>
+<li>
+<p>The ACCOUNT MANIFEST FILE MUST BE at the URL:</p>
+</li>
+</ul>
+<pre class="code-block">
+/.well-known/avatars/UUID/manifest.json
+</pre>
+<ul>
+<li>
+<p>The ACCOUNT MANIFEST FILE MUST BE conforming to
+the MANIFEST SCHEMA.</p>
+</div>
+</li>
+</ul>
+
+</details>
+
+
+
+<details>
+  <summary>MANIFEST FILE Proposal</summary>
+
+  <div class="default-flow">
+    <details>
+      <summary>Don't use multiple image sizes</summary>
+      <div class="default-flow">
+        <p>
+          Make one big copy of each avatar image. Leave it to the CLIENTS to
+          convert images to sizes that suite their needs.
+        </p>
+        <p>
+          If an ACCOUNT or DOMAIN publishes an avatar that's all pixelated
+          because it's too small they can make it bigger (something they'd have
+          to do anyway if the largest image they provided wasn't big enough).
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Use aspect ratios instead of explicit dimensions</summary>
+      <div class="default-flow">
+        <p>
+          Provide <code>x</code> and <code>y</code>
+          values for images that represent its ratio instead of explicit
+          <code>width</code>
+          and <code>height</code> dimensions
+        </p>
+
+        <p>
+          CLIENTS can scan the MANIFEST FILE and pick whichever radio is closest
+          to the one they need.
+        </p>
+        <p>
+          CLIENTS can also publish lists of aspect ratios they'd prefer allowing
+          ACCOUNTS and DOMAINS to create matching images if they wish
+        </p>
+      </div>
+    </details>
+
+
+    <details>
+      <summary>Include Alt-Text with each image</summary>
+      <div class="default-flow">
+        <p>Add a key for each image that hold alt text. 
+There's an argument to be made for not letting the field
+be `null`, but that's maybe a touch agressive. 
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Don't publish MIME types</summary>
+      <p>
+        Make the requirement that the image's "url" key end with a `.EXTENSION`
+        that must match the encoding of the image.
+      </p>
+    </details>
+
+    <details>
+      <summary>Provide containers for both static and animated avatars</summary>
+      <p>
+        Discords (and probably other CLIENTS) are already using animated
+        avatars. It feels like it make the most sense to include them, but keep
+        them under their own category so its easy for clients to determine which
+        are which. (e.g. animated image formats often come with non-animated
+        capabilities. So, CLIENTS can't rely solely on image extensions to make
+        the determination)
+      </p>
+    </details>
+
+    <details>
+      <summary>Provide both default and alternate image sets</summary>
+      <p>
+        The alternate images take priority if a matching criteria is found. If
+        not, the default images are used
+      </p>
+    </details>
+
+    <details>
+      <summary>Use tags for selection criteria</summary>
+      <div></div>
+    </details>
+
+    <details>
+      <summary>Expect multiples of the same ratio to exist</summary>
+      <p>
+        There can be more than on image per category with the same x/y aspect
+        ratio. Trying to mandate they be unique would only cause overhead for
+        everyone trying to come up with different ways to deal with it when it
+        inevitably happens. Instead, leave it as an option so CLIENTS make
+        decisions about how to handle it explicitly (e.g. just pick the first
+        one).
+      </p>
+    </details>
+    <details>
+      <summary>Allow relative URLs</summary>
+      <p>
+        Having to use full URL that include the domain with OG images is a pain
+        for dev and testing. Make it explicit that URLs that are relative from
+        the docroot are allowed.
+      </p>
+    </details>
+
+    <details>
+      <summary>Allow alternate domain URLs</summary>
+      <p>
+        Any valid URL should be accepted, regardless of 
+        the domain. 
+      </p>
+    </details>
+
+  </div>
+</details>
+
+
+<details><summary>MANIFEST FILE Proposal Example</summary>
+
+<pre class="code-block"><code><span class="line-marker"></span><span class="source json"><span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
+<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>alternate<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
+<span class="line-marker"></span>    <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>animated<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>    <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>static<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span>
+<span class="line-marker"></span>  </span><span class="punctuation section dictionary end json">}</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>schemaVersion<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="constant numeric json">0</span><span class="punctuation separator array json">,</span> <span class="constant numeric json">1</span><span class="punctuation separator array json">,</span> <span class="constant numeric json">0</span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>default<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
+<span class="line-marker"></span>    <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>animated<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>    <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>static<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span>
+<span class="line-marker"></span>      <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>altText<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>a black and white portrait...<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>tags<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>url<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>/.well-known/avatars/default.jpg<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>x<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="constant numeric json">1</span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>y<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="constant numeric json">1</span>
+<span class="line-marker"></span>      </span><span class="punctuation section dictionary end json">}</span></span><span class="punctuation separator array json">,</span>
+<span class="line-marker"></span>      <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>altText<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>lorem ipsum...<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>tags<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>mastodon<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>url<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>/images/16x9-example.png<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>x<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="constant numeric json">1.77</span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>y<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="constant numeric json">1</span>
+<span class="line-marker"></span>      </span><span class="punctuation section dictionary end json">}</span></span><span class="punctuation separator array json">,</span>
+<span class="line-marker"></span>      <span class="meta structure dictionary json"><span class="punctuation section dictionary begin json">{</span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>altText<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>lorem ipsum...<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>tags<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="meta structure array json"><span class="punctuation section array begin json">[</span><span class="punctuation section array end json">]</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>url<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>https://well-known-avatars.alanwsmith.com/images/another-1x1.jpg<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>x<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="constant numeric json">1</span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>        <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>y<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="constant numeric json">1</span>
+<span class="line-marker"></span>      </span><span class="punctuation section dictionary end json">}</span></span>
+<span class="line-marker"></span>    <span class="punctuation section array end json">]</span></span>
+<span class="line-marker"></span>  </span><span class="punctuation section dictionary end json">}</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>uuid<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>6fdc-etc...<span class="punctuation definition string end json">&quot;</span></span>
+<span class="line-marker"></span></span><span class="punctuation section dictionary end json">}</span></span></span></code>
+</pre>
+</details>
+
+
+<details open><summary>Various Rationales</summary>
+
+<ul>
+<li>
+<p>Using <code>/.well-known/avatars</code> instead of <code>/.well-known/avatar</code>
+makes it clear that multiple accounts may be available (and
+possibly the DOMAIN) are potentially included.</p>
+</li>
+<li>
+<p>Using a directory based appraoch like:</p>
+<pre><code>  /.well-known/avatars/UUID/default.jpg
+  and
+  /.well-known/avatars/UUID/manifest.json
+</code></pre>
+<p>instead of a query string appraoch like:</p>
+<pre><code>  /.well-known/avatar?resource=acct:username@example.com
+</code></pre>
+<p>allow for the entire feature to be served statically.
+My position is that this lowers the barrier of entry
+to gaining access to the avatars significantly. If
+server side processing is required an entire
+category of free services is taken off the board.</p>
+</li>
+<li>
+<p>Email address should never be sent in cleartext.
+Even if the requests themselves go over an encrypted
+channel, it's entirely to easy for a service leak URLs
+(e.g. a naive developer might call the URL with email
+address directly from public pages). The system should
+be set up so that leaking either through intention
+or mistake is eliminated wherever possible.</p>
+<p>I'm pitching UUID v5 here, but that's very much open
+for discussion. Those decisions are securty based
+and I'd look for help from experts in the field
+on that front.</p>
+</li>
+<li>
+<p>I like having the DOMAIN version included for two reasons.
+First, it would let folks who have domains use
+them without having to submit any other token or PII.
+Second, it feels like a nice way to expand the tools
+that RSS readers have available as well.</p>
+</li>
+<li>
+<p>The idea of using an <code>Accept</code> header to determine
+which content to reply with is very cool. My push
+back against it is that it requires server side
+processing. That introduces the same issue
+of limiting the availabity to folks who
+have accesss to server site processing.</p>
+<p>That's what leads me to the independent, explict
+paths for the <code>.json</code> and <code>.jpg</code> files.</p>
+</li>
+</ul>
+
+
+</details>      </main>
 
       <footer>
         <div class="small-font">

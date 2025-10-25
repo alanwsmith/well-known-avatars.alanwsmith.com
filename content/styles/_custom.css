@@ -12,3 +12,13 @@
   padding: var(--default-padding);
 }
 
+.left-pad {
+  padding-left: 2rem;
+  border-left: var(--accent-border);
+}
+
+details > *:not(summary){
+  margin-left: 0.4rem;
+  border-left: var(--accent-border);
+  padding-left: 2rem;
+}

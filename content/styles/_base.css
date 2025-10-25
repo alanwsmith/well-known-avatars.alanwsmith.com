@@ -1709,9 +1709,6 @@ del {
   text-decoration: line-through;
 }
 details {
-  border: var(--accent-border-faded);
-  border-radius: var(--default-radius);
-  padding: var(--default-padding);
 }
 dfn {
   font-style: italic;
@@ -1993,6 +1990,11 @@ video {
     --svg-note-default-stroke-color: var(--primary-color);
     --svg-note-default-fill-color: var(--primary-color);
   }
+}
+
+
+details > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
 }
 
 
