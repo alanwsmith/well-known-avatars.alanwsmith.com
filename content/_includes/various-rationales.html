@@ -1,0 +1,168 @@
+
+<details open><summary>Various Rationales</summary>
+
+[! filter markdown|safe !]
+
+- Using `/.well-known/avatars` instead of `/.well-known/avatar` 
+makes it clear that multiple accounts may be available (and
+possibly the DOMAIN) are potentially included. 
+
+- Using a directory based appraoch like:
+
+        /.well-known/avatars/UUID/default.jpg
+        and
+        /.well-known/avatars/UUID/manifest.json
+
+  instead of a query string appraoch like:
+
+        /.well-known/avatar?resource=acct:username@example.com
+
+  allow for the entire feature to be served statically. 
+  My position is that this lowers the barrier of entry
+  to gaining access to the avatars significantly. If
+  server side processing is required an entire
+  category of free services is taken off the board. 
+
+- Email address should never be sent in cleartext. 
+Even if the requests themselves go over an encrypted 
+channel, it's entirely to easy for a service leak URLs
+(e.g. a naive developer might call the URL with email 
+address directly from public pages). The system should
+be set up so that leaking either through intention
+or mistake is eliminated wherever possible.
+
+  I'm pitching UUID v5 here, but that's very much open
+  for discussion. Those decisions are securty based
+  and I'd look for help from experts in the field
+  on that front. 
+
+  The thing I'd want to keep in mind is that 
+  whatever approach is used that it be desgined
+  to be portable. Specifcially, you should
+  be able to move your UUID to different DOMAINs
+  without losing the UUID. 
+
+- I like having the DOMAIN version included for two reasons. 
+First, it would let folks who have domains use
+them without having to submit any other token or PII. 
+Second, it feels like a nice way to expand the tools
+that RSS readers have available as well. 
+
+- The idea of using an `Accept` header to determine
+which content to reply with is very cool. My push
+back against it is that it requires server side
+processing. That introduces the same issue
+of limiting the availabity to folks who
+have accesss to server site processing. 
+
+  That's what leads me to the independent, explict 
+  paths for the `.json` and `.jpg` files. 
+
+- Thiking about the user interface on CLIENT
+sides, there would have to be two fields
+to enter: 1. the email address (or other 
+account token), and 2. the DOMAIN
+responsible for provding the AVATAR SET.
+
+  Otherwise, there's no way for folks with
+accounts on domains they don't own to
+participage. 
+
+- A metadata tag should be defined as well. something like:
+
+        <link rel="avatars" href="/.well-known/avatars/UUID/manifest.json" />
+  
+   I don't know enough
+  about the process to know if that would be handled
+  in a sepearate proposal or not. That could
+  do things like signal RSS readers to use ACCOUNT
+  specific AVATAR SETS instead of DOMAIN
+  ones. 
+
+
+- It's clear a big impetus for using a
+`.well-known` address is so a
+single set of images can be used
+across multiple services.
+
+  That's awesome, but I don't want 
+  to _have_ to use the same image
+  everywhere. The easiest example
+  is that I don't want to use the
+  same image on Mastodon as LinkedIn. 
+
+  The desirability of the feature
+  goes up an order of magnitude if
+  I can manage my avatars in a central
+  location but not be limited 
+  to one. That's what led to the idea
+  of the default and alternate image
+  collections.
+
+- Square images are the way of the world these
+days. I don't like the idea of locking into 
+that over a decades long timeline. Different CLIENTS 
+are gonna have designs that call for different image sizes. 
+Frankly, I wouldn't have it any other way. 
+That's what lead to the idea of the different apect
+ratios.
+
+  Indiivdual CLIENTS can choose whatever best fits
+their system. They can also publish guidlies for
+what the most optimail ratios would be. Thouse
+guidelines would likely include minimal size
+recommendations. It feels like that's where
+those recommendations make the most sense 
+intead of trying to define it at the spec level. 
+
+  The approch should give some nice flexibilty 
+  without getting into the XKCD Standards problem ^^xkcd^^
+
+- CLIENTS can publish a list of TAGS they look for. 
+
+  I need to think about this more, but I can see
+  a path to setting up guildelines like:
+ 
+  CLIENTS CAN utilize any image from the
+  `default` array. 
+
+  CLIENTS SHOULD NOT utilize any images
+  in the `alternate` array unless they
+  contain a tag matching one the CLIENT
+  makes known they are useing etc...
+
+  Basic idea is that individual who manage
+  an ACCOUNT/DOMAIN AVATAR SET can make
+  DEFAULT images avilable without any
+  extra overhead. But, anyone who's intersted
+  in distributing differeng images
+  to different CLIENTS will have the
+  capability of doing so if they 
+  want to put in the effort. 
+  
+  (And for anyone thinking about yet, you're right,
+  there's not a security envelope
+  around this. Every image listed in a
+  manifest.json could be used by anyone
+  at any point. That's a feature of the
+  system not an oversight. The only way 
+  to prevent an image from being used
+  is by not publishing it at all.)
+
+- Tagging also offers some other possabilities. 
+For example CLIENTS could publish 
+that one of the image tags they look for
+is `banner` with a ration of 16:9. 
+
+  I wouldn't try to standardize those
+  tags but if big services adopt some
+  they'd likely become de facto standards
+  on their own. 
+
+- None of this discusses cache handling/proxying
+etc... That's all worthy of discussion
+but beyond the scope of this document. 
+
+  [!- endfilter !]
+
+</details>

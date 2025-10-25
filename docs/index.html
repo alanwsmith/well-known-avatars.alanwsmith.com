@@ -2498,10 +2498,12 @@ be `null`, but that's maybe a touch agressive.
 <span class="line-marker"></span>      </span><span class="punctuation section dictionary end json">}</span></span>
 <span class="line-marker"></span>    <span class="punctuation section array end json">]</span></span>
 <span class="line-marker"></span>  </span><span class="punctuation section dictionary end json">}</span></span><span class="punctuation separator dictionary pair json">,</span></span>
+<span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>domain<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>www.example.com<span class="punctuation definition string end json">&quot;</span></span><span class="punctuation separator dictionary pair json">,</span></span>
 <span class="line-marker"></span>  <span class="meta structure dictionary key json"><span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>uuid<span class="punctuation definition string end json">&quot;</span></span></span><span class="meta structure dictionary value json"><span class="punctuation separator dictionary key-value json">:</span> <span class="string quoted double json"><span class="punctuation definition string begin json">&quot;</span>6fdc-etc...<span class="punctuation definition string end json">&quot;</span></span>
 <span class="line-marker"></span></span><span class="punctuation section dictionary end json">}</span></span></span></code>
 </pre>
 </details>
+
 
 
 <details open><summary>Various Rationales</summary>
@@ -2539,6 +2541,11 @@ or mistake is eliminated wherever possible.</p>
 for discussion. Those decisions are securty based
 and I'd look for help from experts in the field
 on that front.</p>
+<p>The thing I'd want to keep in mind is that
+whatever approach is used that it be desgined
+to be portable. Specifcially, you should
+be able to move your UUID to different DOMAINs
+without losing the UUID.</p>
 </li>
 <li>
 <p>I like having the DOMAIN version included for two reasons.
@@ -2557,7 +2564,210 @@ have accesss to server site processing.</p>
 <p>That's what leads me to the independent, explict
 paths for the <code>.json</code> and <code>.jpg</code> files.</p>
 </li>
+<li>
+<p>Thiking about the user interface on CLIENT
+sides, there would have to be two fields
+to enter: 1. the email address (or other
+account token), and 2. the DOMAIN
+responsible for provding the AVATAR SET.</p>
+<p>Otherwise, there's no way for folks with
+accounts on domains they don't own to
+participage.</p>
+</li>
+<li>
+<p>A metadata tag should be defined as well. something like:</p>
+<pre><code>  &lt;link rel=&quot;avatars&quot; href=&quot;/.well-known/avatars/UUID/manifest.json&quot; /&gt;
+</code></pre>
+<p>I don't know enough
+about the process to know if that would be handled
+in a sepearate proposal or not. That could
+do things like signal RSS readers to use ACCOUNT
+specific AVATAR SETS instead of DOMAIN
+ones.</p>
+</li>
+<li>
+<p>It's clear a big impetus for using a
+<code>.well-known</code> address is so a
+single set of images can be used
+across multiple services.</p>
+<p>That's awesome, but I don't want
+to <em>have</em> to use the same image
+everywhere. The easiest example
+is that I don't want to use the
+same image on Mastodon as LinkedIn.</p>
+<p>The desirability of the feature
+goes up an order of magnitude if
+I can manage my avatars in a central
+location but not be limited
+to one. That's what led to the idea
+of the default and alternate image
+collections.</p>
+</li>
+<li>
+<p>Square images are the way of the world these
+days. I don't like the idea of locking into
+that over a decades long timeline. Different CLIENTS
+are gonna have designs that call for different image sizes.
+Frankly, I wouldn't have it any other way.
+That's what lead to the idea of the different apect
+ratios.</p>
+<p>Indiivdual CLIENTS can choose whatever best fits
+their system. They can also publish guidlies for
+what the most optimail ratios would be. Thouse
+guidelines would likely include minimal size
+recommendations. It feels like that's where
+those recommendations make the most sense
+intead of trying to define it at the spec level.</p>
+<p>The approch should give some nice flexibilty
+without getting into the XKCD Standards problem ^^xkcd^^</p>
+</li>
+<li>
+<p>CLIENTS can publish a list of TAGS they look for.</p>
+<p>I need to think about this more, but I can see
+a path to setting up guildelines like:</p>
+<p>CLIENTS CAN utilize any image from the
+<code>default</code> array.</p>
+<p>CLIENTS SHOULD NOT utilize any images
+in the <code>alternate</code> array unless they
+contain a tag matching one the CLIENT
+makes known they are useing etc...</p>
+<p>Basic idea is that individual who manage
+an ACCOUNT/DOMAIN AVATAR SET can make
+DEFAULT images avilable without any
+extra overhead. But, anyone who's intersted
+in distributing differeng images
+to different CLIENTS will have the
+capability of doing so if they
+want to put in the effort.</p>
+<p>(And for anyone thinking about yet, you're right,
+there's not a security envelope
+around this. Every image listed in a
+manifest.json could be used by anyone
+at any point. That's a feature of the
+system not an oversight. The only way
+to prevent an image from being used
+is by not publishing it at all.)</p>
+</li>
+<li>
+<p>Tagging also offers some other possabilities.
+For example CLIENTS could publish
+that one of the image tags they look for
+is <code>banner</code> with a ration of 16:9.</p>
+<p>I wouldn't try to standardize those
+tags but if big services adopt some
+they'd likely become de facto standards
+on their own.</p>
+</li>
+<li>
+<p>None of this discusses cache handling/proxying
+etc... That's all worthy of discussion
+but beyond the scope of this document.</p>
+</li>
 </ul>
+</details>
+
+<details><summary>Conclusion</summary>
+
+<p>This is, obviously, way more complex
+than the original idea. My position is
+that the flexibility is worth the
+trade-off and that flexibility will
+have an outsized increase in bring
+usage into a default move.</p>
+<p>I see it as a binary complexity
+switch. It's either dead simple, or
+you get a fiddle with a bunch of things.</p>
+<p>If you're making your own avatar and don't
+want to have to deal with the complexity
+just throw a square image in the default
+path and be done with it:</p>
+<p>-- path/</p>
+<p>/.well-known/avatars/SOME_OBFUSCATED_ID/default.jpg</p>
+<p>-- /path</p>
+<p>-- aside
+-- title: aside</p>
+<p>We'd want to make a tool that generates
+the IDs for folks so it's easy to do.
+Ideally, that would get backed into
+site building apps, but we should make
+sure there are tools/sites that make
+it easy to do independently.</p>
+<p>-- p</p>
+<p>If you're a service/app/RSS reader using
+the images you can also just pull
+the default if you want to show an image
+but don't want to devote the resources
+to go all-out.</p>
+<p>For those people and projects that <strong>do</strong>
+want to go father, all the tools are there.
+From simply using a horizontal image all
+the way to having multiple animated images
+for every day of the week for your
+favorite RSS reader, you can take things
+as far as the collaboration between
+the makers and the displayers wants
+to go.</p>
+<p>-- list/</p>
+<ul>
+<li>
+<p>For users, if you don't want to mess
+with shit, just throw a square image
+in:</p>
+</li>
+<li>
+<p>If you want to play with all the options
+start chucking more images into the <code>manifest.jpg</code>
+at whatever level you want.</p>
+</li>
+<li>
+<p>Same goes for services that use the images.
+Need to get up and running quickly? Grab
+<code>default.jpg</code>.</p>
+</li>
+<li>
+<p>If you're a service that wants more you can
+grab the horizontal or vertical images.</p>
+</li>
+<li>
+<p>Even more? publish a tag you'll back up
+with recommended sizes. Slurp them up
+if you find them.</p>
+</li>
+</ul>
+<p>-- /list</p>
+<h3>Footnotes</h3>
+<p>-- footnote
+-- id: tmp</p>
+<p>I don't remember who I heard the phrase
+&quot;Temporary ain't&quot; from. It was years ago,
+but it's a front-of-mind idea for me.</p>
+<p>The best example I have is the &quot;Temporary&quot;
+process I wrote for grabbing weather
+data from an API and showing in the
+PGA TOUR leaderboard during my career
+there.</p>
+<p>It wasn't supposed to be my job,
+but the team that was theoretically
+responsible for it couldn't meed a sales
+deadline. I threw together a script
+that did the thing until they could
+get to it. It got used for
+for ten years.</p>
+<p>-- footnote
+-- id: xkcd
+-- title: XKCD: Standards
+-- url: https://xkcd.com/927/</p>
+<p>Start with N, end up with N+1.</p>
+<p>-- ref
+-- title: Mastodon Thread
+-- url: https://hachyderm.io/@Edent@mastodon.social/115424378257516254</p>
+<p>-- ref
+-- title: example
+-- url: https://shkspr.mobi/.well-known/avatar/?resource=acct:whatever@shkspr.mobi</p>
+<p>-- ref
+-- title: Key Discovery
+-- url: https://datatracker.ietf.org/doc/html/draft-koch-openpgp-webkey-service-20#name-key-discovery</p>
+<p>Something interesting that was referenced in the thread.</p>
 
 
 </details>      </main>

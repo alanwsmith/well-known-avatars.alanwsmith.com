@@ -1,0 +1,151 @@
+
+<details><summary>Conclusion</summary>
+
+[! filter markdown|safe !]
+
+
+This is, obviously, way more complex
+than the original idea. My position is
+that the flexibility is worth the 
+trade-off and that flexibility will
+have an outsized increase in bring
+usage into a default move. 
+
+I see it as a binary complexity 
+switch. It's either dead simple, or
+you get a fiddle with a bunch of things.
+
+If you're making your own avatar and don't
+want to have to deal with the complexity
+just throw a square image in the default 
+path and be done with it:
+
+-- path/
+
+/.well-known/avatars/SOME_OBFUSCATED_ID/default.jpg
+
+-- /path
+
+-- aside
+-- title: aside 
+
+We'd want to make a tool that generates
+the IDs for folks so it's easy to do. 
+Ideally, that would get backed into 
+site building apps, but we should make
+sure there are tools/sites that make
+it easy to do independently. 
+
+-- p
+
+If you're a service/app/RSS reader using
+the images you can also just pull 
+the default if you want to show an image
+but don't want to devote the resources
+to go all-out.
+
+For those people and projects that __do__
+want to go father, all the tools are there. 
+From simply using a horizontal image all 
+the way to having multiple animated images
+for every day of the week for your 
+favorite RSS reader, you can take things
+as far as the collaboration between 
+the makers and the displayers wants
+to go. 
+
+
+
+
+-- list/
+
+- For users, if you don't want to mess
+with shit, just throw a square image
+in:
+
+- If you want to play with all the options
+start chucking more images into the ``manifest.jpg``
+at whatever level you want. 
+
+- Same goes for services that use the images. 
+Need to get up and running quickly? Grab 
+``default.jpg``. 
+
+- If you're a service that wants more you can
+grab the horizontal or vertical images. 
+
+- Even more? publish a tag you'll back up
+with recommended sizes. Slurp them up
+if you find them.
+
+
+-- /list
+
+
+### Footnotes
+
+
+-- footnote
+-- id: tmp
+
+I don't remember who I heard the phrase
+"Temporary ain't" from. It was years ago, 
+but it's a front-of-mind idea for me. 
+
+The best example I have is the "Temporary"
+process I wrote for grabbing weather
+data from an API and showing in the 
+PGA TOUR leaderboard during my career
+there. 
+
+It wasn't supposed to be my job,
+but the team that was theoretically 
+responsible for it couldn't meed a sales
+deadline. I threw together a script
+that did the thing until they could
+get to it. It got used for
+for ten years. 
+
+
+
+
+
+-- footnote
+-- id: xkcd
+-- title: XKCD: Standards
+-- url: https://xkcd.com/927/
+
+Start with N, end up with N+1.
+
+
+
+
+
+
+-- ref
+-- title: Mastodon Thread
+-- url: https://hachyderm.io/@Edent@mastodon.social/115424378257516254
+
+
+-- ref
+-- title: example
+-- url: https://shkspr.mobi/.well-known/avatar/?resource=acct:whatever@shkspr.mobi
+
+-- ref
+-- title: Key Discovery
+-- url: https://datatracker.ietf.org/doc/html/draft-koch-openpgp-webkey-service-20#name-key-discovery
+
+Something interesting that was referenced in the thread. 
+
+
+
+
+
+
+
+
+  [!- endfilter !]
+
+
+
+</details>

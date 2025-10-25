@@ -30,5 +30,6 @@
       }
     ]
   },
+  "domain": "www.example.com",
   "uuid": "6fdc-etc..."
 }

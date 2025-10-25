@@ -242,83 +242,10 @@ the MANIFEST SCHEMA.
 </details>
 
 
-<details open><summary>Various Rationales</summary>
+[! include "_includes/various-rationales.html" !]
 
-[! filter markdown|safe !]
+[! include "_includes/conclusion.html" !]
 
-- Using `/.well-known/avatars` instead of `/.well-known/avatar` 
-makes it clear that multiple accounts may be available (and
-possibly the DOMAIN) are potentially included. 
-
-- Using a directory based appraoch like:
-
-        /.well-known/avatars/UUID/default.jpg
-        and
-        /.well-known/avatars/UUID/manifest.json
-
-  instead of a query string appraoch like:
-
-        /.well-known/avatar?resource=acct:username@example.com
-
-  allow for the entire feature to be served statically. 
-  My position is that this lowers the barrier of entry
-  to gaining access to the avatars significantly. If
-  server side processing is required an entire
-  category of free services is taken off the board. 
-
-- Email address should never be sent in cleartext. 
-Even if the requests themselves go over an encrypted 
-channel, it's entirely to easy for a service leak URLs
-(e.g. a naive developer might call the URL with email 
-address directly from public pages). The system should
-be set up so that leaking either through intention
-or mistake is eliminated wherever possible.
-
-  I'm pitching UUID v5 here, but that's very much open
-  for discussion. Those decisions are securty based
-  and I'd look for help from experts in the field
-  on that front. 
-
-- I like having the DOMAIN version included for two reasons. 
-First, it would let folks who have domains use
-them without having to submit any other token or PII. 
-Second, it feels like a nice way to expand the tools
-that RSS readers have available as well. 
-
-- The idea of using an `Accept` header to determine
-which content to reply with is very cool. My push
-back against it is that it requires server side
-processing. That introduces the same issue
-of limiting the availabity to folks who
-have accesss to server site processing. 
-
-  That's what leads me to the independent, explict 
-  paths for the `.json` and `.jpg` files. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  [!- endfilter !]
-
-
-
-</details>
 
 
 [!- endblock -!]
