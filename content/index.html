@@ -7,13 +7,16 @@
 
 <h2>Current Draft</h2>
 
-[! include "_drafts/0020-draft.html" !]
+[! for folder in folders !]
+  [! if folder.parent == "_current-draft" !]
+    [! set current_folder = folder.parent + "/" + folder.name !]
+[! include current_folder + "/overview.html" !]
+  [! endif !]
+[! endfor !]
 
 
 
 [! include "_includes/0400-footnotes.html" !]
-
-
 
 <h2>Previous Drafts</h2>
 
