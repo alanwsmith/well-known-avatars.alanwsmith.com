@@ -1,4 +1,4 @@
-{ 
+{
   "avatars": [
     {
       "altText": "a black and white portrait...",
@@ -8,22 +8,23 @@
       "url": "/.well-known/avatars/default.jpg"
     },
     {
-      "altText": "the beach at sunset...",
+      "altText": "me at beach at sunset...",
       "animated": false,
       "ratio": [1.77, 1],
       "tags": [],
       "url": "/.well-known/avatars/default.jpg"
     },
     {
-      "altText": "a black and white portrait...",
+      "altText": "a color portrait...",
       "animated": false,
       "ratio": [1, 1],
       "tags": ["mastodon"],
       "url": "https://well-known-avatar.alanwsmith.com/images/square-for-mastodon.jpg"
     }
   ],
-  "domain": "well-known-avatars.alanwsmith.com",
   "schemaVersion": [0, 2, 0],
-  "uuid": "c91ba7fe-457c-5b62-b769-efa6643c3fde"
+  "source": {
+    "domain": "well-known-avatars.alanwsmith.com",
+    "uuid": "c91ba7fe-457c-5b62-b769-efa6643c3fde"
+  }
 }
-
